@@ -15,7 +15,7 @@
 //Leonardo use Serial1 for TTL and Serial for USB
 #define MONITORING
 #ifdef MONITORING
-//if you want to use other Serial port then adapt line bellow
+//if you want to use other Serial port then adapt line below
 #define BT_BEGIN(x)      Serial.begin(x);while (!Serial) {}
 #define BT_AVAILABLE    Serial.available
 #define BT_READ       Serial.read
@@ -107,7 +107,7 @@ void eegManager(){
     #ifdef DEMO
     static unsigned long lastDemoMaxResultMillis=0;
     if((millis()-lastDemoMaxResultMillis) > 1000) {
-                  TERM_PRINT(" Attention: ");
+      TERM_PRINT(" Attention: ");
       TERM_PRINTDEC(attention);
       TERM_PRINT(" Meditation: ");
       TERM_PRINTDEC(meditation);
@@ -145,10 +145,6 @@ void lightManager(){
     
 }
 
-
-
-
-
 //neurosky code
 //original: http://developer.neurosky.com/docs/doku.php?id=arduino_tutorial 
 ////////////////////////////////
@@ -159,9 +155,7 @@ byte ReadOneByte(){
   int ByteRead;
   while(!BT_AVAILABLE()){
     eegManager();
-    lightManager();
-  
-    
+    lightManager();  
   };
 
   ByteRead = BT_READ();
@@ -182,11 +176,6 @@ void loop(){
 
   static boolean bigPacket = false;
 
-
-
-
-   
-  
   // Look for sync bytes
     if(ReadOneByte() == 170){
     if(ReadOneByte() == 170){
@@ -236,36 +225,13 @@ void loop(){
         
 
         }
-        
-        
+  
         else {
           
           digitalWrite(LEDOFF, LOW);  
           digitalWrite(LEDON, HIGH);
         
         }
-#ifndef DEMO
-        if(bigPacket){
-          TERM_PRINT("PoorQuality: ");
-          TERM_PRINTDEC(poorQuality);
-          
-          TERM_PRINT(" Meditation: ");
-          TERM_PRINTDEC(meditation);
-          TERM_PRINT(" AttentionResult: ");
-          TERM_PRINTDEC(attentionResult);
-          TERM_PRINT(" eegResult: ");
-          TERM_PRINTDECLN(eegResult);
-         
-         TERM_PRINT(" Attention: ");
-         TERM_PRINTDEC(attention);
-         TERM_PRINT(" rval: ");
-         TERM_PRINTDECLN(rval);
-         TERM_PRINT(" Attention: ");
-         TERM_PRINTDEC(attention);
-         TERM_PRINT(" bval: ");
-         TERM_PRINTDECLN(bval);
-        }
-#endif
 #endif
         bigPacket = false;
       } else {
